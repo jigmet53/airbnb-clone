@@ -1,0 +1,124 @@
+<%- include('../partials/head') %>
+  </head>
+  <body class="bg-gray-50 font-sans leading-normal tracking-normal">
+    <%- include('../partials/nav') %>
+
+    <main class="flex justify-center items-center min-h-screen">
+      <section class="bg-white p-10 rounded-2xl shadow-lg w-full max-w-md border border-gray-100">
+        <h1 class="text-3xl font-extrabold mb-6 text-center text-gray-800">Register as a New User</h1>
+
+        <form action="/signup" method="POST" class="space-y-5">
+        
+    <%- include('../partials/error') %>
+
+
+
+
+          <!-- First Name -->
+          <div>
+            <label for="firstname" class="block text-gray-700 font-medium mb-1">First Name</label>
+            <input
+              type="text"
+              id="firstname"
+              value="<%= oldInput.firstname ? oldInput.firstname : '' %>"
+              name="firstname"
+              placeholder="John"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
+              required
+            />
+          </div>
+
+          <!-- Last Name -->
+          <div>
+            <label for="lastname" class="block text-gray-700 font-medium mb-1">Last Name</label>
+            <input
+              type="text"
+              value="<%= oldInput.lastname ? oldInput.lastname : '' %>"
+
+              id="lastname"
+              name="lastname"
+              placeholder="Doe"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-gray-700 font-medium mb-1">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value="<%= oldInput.email ? oldInput.email : '' %>"
+
+              placeholder="john@example.com"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
+              required
+            />
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password" class="block text-gray-700 font-medium mb-1">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter a strong password"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
+              required
+            />
+          </div>
+
+          <!-- Confirm Password -->
+          <div>
+            <label for="confirmPassword" class="block text-gray-700 font-medium mb-1">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Re-enter your password"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
+              required
+            />
+          </div>
+
+          <!-- User Type -->
+          <div>
+            <p class="text-gray-700 font-medium mb-2">User Type</p>
+            <div class="flex items-center gap-6">
+              <label class="flex items-center space-x-2">
+                <input type="radio" value="guest"  <% if (oldInput.usertype === "guest") { %> checked <% } %> name="usertype" id="guest" class="text-red-500 focus:ring-red-400" checked />
+                <span class="text-gray-700">Guest</span>
+              </label>
+              <label class="flex items-center space-x-2">
+                <input type="radio" value="host" <% if (oldInput.usertype === "host") { %> checked <% } %> name="usertype" id="host" class="text-red-500 focus:ring-red-400" />
+                <span class="text-gray-700">Host</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Terms -->
+          <div class="flex items-center gap-2">
+            <input type="checkbox" name="terms" id="terms" class="text-red-500 focus:ring-red-400" required />
+            <label for="terms" class="text-gray-700 text-sm">I agree to the <a href="#" class="text-red-500 hover:underline">terms and conditions</a>.</label>
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg"
+          >
+            Register
+          </button>
+
+          <!-- Login Redirect -->
+          <p class="text-center text-gray-600 text-sm mt-4">
+            Already have an account?
+            <a href="/login" class="text-red-500 hover:underline font-medium">Login here</a>
+          </p>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
