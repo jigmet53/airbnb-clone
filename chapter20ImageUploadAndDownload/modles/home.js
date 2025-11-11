@@ -34,6 +34,8 @@ const homeSchema=mongoose.Schema({
   rating:{type: Number,required: true},
 
   photo:String,
+  PDF:String,
+
 
   description:String,
 

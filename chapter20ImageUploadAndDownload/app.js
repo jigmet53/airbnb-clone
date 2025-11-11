@@ -13,7 +13,7 @@ const {hostRouter}= require("./router/hostRouter")
 const rootDir= require('./utils/pathUtils')
 const errorController= require("./controllers/error");
 const {default: mongoose}= require('mongoose');
-
+const fs = require('fs');
 
 const DB_PATH="mongodb+srv://jigmet:root@jigmet.ajgzrcz.mongodb.net/airbnb?retryWrites=true&w=majority&appName=jigmet";
 const store = new mongoDbStore({
@@ -38,8 +38,22 @@ const randomString=(length)=>{
   return result;
 }
 const storage= multer.diskStorage({
-  destination:(req, file, cb)=>{
-    cb(null, "upload/")
+    destination:(req, file, cb)=>{
+       let uploadPath;
+ if (file.mimetype.startsWith('image/')) {
+          uploadPath = 'upload';
+
+    } else if (file.mimetype === 'application/pdf') {
+     uploadPath=  'rules';
+    }
+    else {
+      uploadPath ='upload/others';
+    }
+     // Create folder if it doesn't exist
+    fs.mkdirSync(uploadPath, { recursive: true });
+       cb(null,uploadPath);
+
+  
   },
   filename :(req, file, cb)=>{
     cb(null, randomString(10)+'-'+ file.originalname);
@@ -48,7 +62,7 @@ const storage= multer.diskStorage({
 });
 
 const fileFilter=((req, file,cb)=>{
-  if(file.mimetype==='image/jpg' || file.mimetype==='image/jpeg' ||file.mimetype==='image/png'){
+  if(file.mimetype==='image/jpg' || file.mimetype==='image/jpeg' ||file.mimetype==='image/png'||file.mimetype==='application/pdf'){
     cb(null,true);
   }
   else{
@@ -67,8 +81,14 @@ app.use("/upload", express.static(path.join(rootDir,'upload')))
 app.use("/host/upload", express.static(path.join(rootDir,'upload')))
 
 app.use("/home/upload", express.static(path.join(rootDir,'upload')))
+app.use("/rules", express.static(path.join(rootDir, 'rules')));
 
-app.use(multer(multerOptions).single('photo'));
+const upload= multer(multerOptions);
+app.use(upload.fields([
+  {name:'photo', maxCount:1},
+  {name:'doc', maxCount:1}
+
+]));
 app.use(session({
   secret:"jigmet lerning",
   resave: false,

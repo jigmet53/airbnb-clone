@@ -38,11 +38,21 @@
         <input
           type="file"
           name="photo"
-          multiple
+          
          accept="image/jpg, image/jpeg, image/png"
 
         
           class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
+          <% if(!editing){ %>
+             <input
+          type="file"
+          name="doc"
+          
+         accept="application/pdf"
+
+        
+          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
+          <%}%>
           <textarea
          
           name="description"
